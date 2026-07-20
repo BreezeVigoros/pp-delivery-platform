@@ -6,7 +6,7 @@
   },
   "deploy": {
     "startCommand": "node server/index.cjs",
-    "healthcheckPath": "/",
+    "healthcheckPath": "/health",
     "multiRegionConfig": {
       "sfo": {
         "numReplicas": 1
