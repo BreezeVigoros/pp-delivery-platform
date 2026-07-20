@@ -1,18 +1,16 @@
 {
-  "name": "pp-delivery-platform",
-  "version": "1.0.0",
-  "description": "温州PP期货交割仓智能管理平台",
-  "startCommand": "node server/index.cjs",
-  "buildCommand": "npm run build",
-  "installCommand": "npm ci --omit=dev",
-  "regions": ["fra2"],
-  "ports": [3000],
-  "checks": [
-    {
-      "path": "/",
-      "interval": "30s",
-      "timeout": "5s",
-      "gracePeriod": "10s"
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile"
+  },
+  "deploy": {
+    "startCommand": "node server/index.cjs",
+    "healthcheckPath": "/",
+    "multiRegionConfig": {
+      "sfo": {
+        "numReplicas": 1
+      }
     }
-  ]
+  }
 }
