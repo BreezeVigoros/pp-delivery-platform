@@ -26,6 +26,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   });
 
   const refresh = useCallback(async () => {
+    // 未登录时不请求 API，避免 401 循环
+    if (!api.getToken()) {
+      setState(prev => ({ ...prev, loading: false }));
+      return;
+    }
     setState(prev => ({ ...prev, loading: true, error: null }));
     try {
       const [inventory, receipts, deliveries, quality, finance] = await Promise.all([
@@ -40,8 +45,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         stats: statsData, loading: false, error: null,
       });
     } catch (err: any) {
-      // API 不可用时回退到静态数据
-      console.warn('API 连接失败，使用本地数据:', err.message);
+      console.warn('API 连接失败:', err.message);
       setState(prev => ({ ...prev, loading: false }));
     }
   }, []);

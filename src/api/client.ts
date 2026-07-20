@@ -30,7 +30,6 @@ async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
 
   if (res.status === 401) {
     clearToken();
-    window.location.href = '/login';
     throw new Error('未登录');
   }
 
